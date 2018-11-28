@@ -1,10 +1,10 @@
-# 上海市写字等级考试市级抽样阅卷数据处理
+# 上海市写字等级考试数据处理
 
 ## 业务流程
 
-![](/Users/wangpeifeng/github/handwriting/res/business-flow.png)
+![](./res/business-flow.png)
 
-![业务流程](./res/business-flolw.png '图片描述')
+
 
 
 ```flow
