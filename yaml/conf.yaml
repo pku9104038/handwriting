@@ -1,0 +1,9 @@
+---
+conf:
+  dir:
+    yaml: "../yaml/"
+    input: "../data.in/2018/"
+    output: "../data.out/2018/"
+  file:
+    configuration: "writing_2018.yaml"
+...
