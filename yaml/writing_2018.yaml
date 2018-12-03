@@ -115,9 +115,9 @@ configuration:
       -
         key: *city
         values:
-          - "嘉定区"
+          - "嘉定"
           - "张家洼"
-          - "大屯矿区"
+          - "大屯"
           - "梅山"
       -
         key: *school
@@ -153,6 +153,7 @@ configuration:
 
     output:
       dir: "sample/"
+      file: "2018年上海市写字等级考试抽样阅卷名单.xlsx"
 
 
 

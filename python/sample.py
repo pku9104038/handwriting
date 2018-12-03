@@ -163,17 +163,19 @@ class Sample(object):
                 print(xlsx_file)
                 writer = pd.ExcelWriter(xlsx_file)
 
+                # writer = pd.ExcelWriter(output_dir+scope+g+'学校.xlsx')
+                df_school.to_excel(writer, "学校")
+                writer.save()
+
                 #writer = pd.ExcelWriter(output_dir+scope+g+'学生.xlsx')
                 df_city.to_excel(writer, "学生")
                 #writer.save()
 
 
-               # writer = pd.ExcelWriter(output_dir+scope+g+'学校.xlsx')
-                df_school.to_excel(writer, "学校")
-                writer.save()
+
 
         print(df_student)
-        xlsx_file = output_dir+'sample.xlsx'
+        xlsx_file = output_dir+self.cfg.sample_output_file
         print(xlsx_file)
 
         writer = pd.ExcelWriter(xlsx_file)

@@ -77,6 +77,10 @@ class Configuration(object):
     def sample_output_dir(self):
         return self.dir["output"] + self.sample["output"]["dir"]
 
+    @property
+    def sample_output_file(self):
+        return self.sample["output"]["file"]
+
 
     @property
     def sample_columns(self):
