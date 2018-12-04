@@ -42,6 +42,13 @@ class Sample(object):
         """
         self.cfg = cfg.Configuration()
 
+    def union_xlsx(self):
+        """
+        从原始xlsx上报文件提取数据存入csv
+        :return:
+        """
+
+
     def union_input(self):
         """
         从各区csv文件读取数据，并按照文件命名规则提取"区"，"年级"信息，补全数据字段
@@ -190,12 +197,12 @@ class Sample(object):
 
 def main():
     sample = Sample()
-    #sample.union_input()
-    sample.read_input()
-    sample.drop()
-    sample.ignore()
-    sample.limit()
-    sample.rate()
+    sample.union_input()
+    #sample.read_input()
+    #sample.drop()
+    #sample.ignore()
+    #sample.limit()
+    #sample.rate()
 
 
     return 0

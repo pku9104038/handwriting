@@ -4,7 +4,14 @@ configuration:
 
   # conf for sampling from registration data
   sample:
-
+    xlsx:
+      -
+        file:
+        sheet:
+        columns:
+          -
+            name:
+            key:
     union:
       - "嘉定5.csv"
       - "嘉定9.csv"
