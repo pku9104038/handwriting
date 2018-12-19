@@ -1,0 +1,150 @@
+---
+# 写字等级考试数据处理项目
+# 数据程序公共定义文件
+
+# 数据程序公共定义
+# 复制自数据程序公共定义文件
+definition:
+  columns:
+    level: &level
+      "等级"
+    writing: &writing
+      "书写"
+    city: &city
+      "区"
+    grade: &grade
+      "年级"
+    school: &school
+      "学校名称"
+    room: &room
+      "考场代码"
+    seat: &seat
+      "座位号"
+    name: &name
+      "学生姓名"
+    code: &code
+      "学生学籍号"
+
+    score: &score
+      "成绩"
+    score_brush: &score_brush
+      "毛笔成绩"
+    score_pen: &score_pen
+      "硬笔成绩"
+    score_city: &score_city
+      "区阅成绩"
+    score_province: &score_province
+      "市阅成绩"
+    score_city_mean: &score_city_mean
+      "区阅成绩平均"
+    score_province_mean: &score_province_mean
+      "市阅成绩平均"
+    score_city_std: &score_city_std
+      "区阅成绩标准差"
+    score_province_std: &score_province_std
+      "市阅成绩标准差"
+    score_equated: &score_equated
+      "等值成绩"
+
+    exception: &exception
+      "缺考作弊"
+    note: &note
+      "备注"
+
+    gpa: &gpa
+      "等第"
+    gpa_brush: &gpa_brush
+      "毛笔等第"
+    gpa_pen: &gpa_pen
+      "硬笔等第"
+
+  value:
+    level:
+      level1: &level1
+        "一级"
+      level2: &level2
+        "二级"
+    grade:
+      grade5: &grade5
+        "五年级"
+      grade9: &grade9
+        "九年级"
+    writing:
+      pen: "硬笔"
+      brush: "毛笔"
+
+  point:
+    min: &point_min
+      0
+    pen:
+      max: &point_pen_max
+        60
+      perfect: &point_pen_perfect
+        48
+      passed: &point_pen_passed
+        36
+    brush:
+      max: &point_brush_max
+        40
+      pefect: &point_brush_perfect
+        32
+      passed: &point_brush_passed
+        24
+    gpa:
+      perfect: &gpa_perfect
+        "优秀"
+      passed: &gpa_passed
+        "合格"
+      failed: &gpa_failed
+        "不合格"
+
+process:
+  union: # 将各区上报xlsx文件数据合并成一个csv
+    input:
+      -
+        city: "浦东新区"
+        level:
+          -
+            level: *level1
+            file: "02_五年级考生名单.xls"
+            sheet: "5"
+            row: 1  # 起始行（header）
+            columns: # 重命名列
+              -
+                in: "学生学藉号"
+                out: *code
+
+    columns:
+      -
+        name: *level
+        type: "string"
+      -
+        name: *city
+        type: "string"
+      -
+        name: *school
+        type: "string"
+      -
+        name: *room
+        type: "string"
+      -
+        name: *seat
+        type: "string"
+      -
+        name: *code
+        type: "string"
+      -
+        name: *name
+        type: "string"
+
+    output:
+      file: "报名数据合并"
+      sheet: "报名表"
+
+    copy:
+      dir: "../data.in/"
+      subdir: "sample/"
+      file: "报名数据合并"
+      sheet: "报名表"
+
+...

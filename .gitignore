@@ -4,3 +4,7 @@ python/venv/
 python/\.idea/
 
 python/__pycache__/
+
+data\.out/
+
+data\.in/

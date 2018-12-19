@@ -3,10 +3,6 @@
 
 definition:
   columns:
-    level: &level
-      "等级"
-    writing: &writing
-      "书写"
     city: &city
       "区"
     grade: &grade

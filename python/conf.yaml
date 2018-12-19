@@ -1,0 +1,33 @@
+---
+
+# 写字等级考试数据处理项目
+# 数据程序公共配置文件
+
+# 年度
+year: &year
+  "2018"
+
+# 目录
+config:
+  dir:
+    yaml: "../yaml/"
+    input: "../data.in/"
+    output: "../data.out/"
+
+  subdir:
+    registration: "registration/"
+    sample: "sample/"
+    score: "score/"
+    review: "review/"
+    equating: "equating/"
+
+  file:
+    definition: "definition.yaml"
+    registration: "registration.yaml"
+    sample: "sample.yaml"
+    score: "score.yaml"
+    review: "review.yaml"
+    equating: "equating.yaml"
+
+
+...

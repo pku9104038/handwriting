@@ -70,6 +70,41 @@ class Sample(object):
             df_csv = df_csv.append(df)
         df_csv.to_csv(self.cfg.sample_input, index=False, columns=self.cfg.sample_columns)
 
+    def union_score(self):
+        """
+        从上报成绩中读取数据，并按照并按照文件命名规则提取"区"，"年级"信息，补全数据字段
+        将数据写入score_union指定的csv文件
+        :return:
+        """
+        csv_path = self.cfg.score_output_file
+        print(csv_path)
+        unions = self.cfg.score_union
+        dir = self.cfg.score_input_dir
+        df_csv = pd.DataFrame()
+        for u in unions:
+            df = pd.DataFrame()
+            print(u, u[len(u) - 5], u[: len(u) - 5])
+            df = pd.read_csv(dir + u,
+                             #names=self.cfg.union_columns,
+                             #skiprows=1,
+                             dtype=self.cfg.union_dtype)
+            df["区"] = u[:len(u) - 5]
+            df["年级"] = u[len(u) - 5] + "年级"
+            df2 = pd.DataFrame()
+            df2["区"] = df["区"]
+            df2["年级"] = df["年级"]
+            df2["学校名称"] = df["学校名称"]
+            df2["考场代码"] = df["考场代码"]
+            df2["座位号"] = df["座位号"]
+            df2["学生新颖"] = df["学生姓名"]
+            df2["学生学籍号"] = df["学生学籍号"]
+            #print(df)
+            df_csv = df_csv.append(df2)
+        csv_path = self.cfg.score_output_file
+        print(csv_path)
+        df_csv.to_csv(csv_path, index=False)
+        #df_csv.to_csv(csv_path, index=False, columns=self.cfg.sample_columns)
+
     def read_input(self):
         """
         从csv文件读取输入数据到DataFrame实例属性df
@@ -197,12 +232,14 @@ class Sample(object):
 
 def main():
     sample = Sample()
-    sample.union_input()
+
     #sample.read_input()
     #sample.drop()
     #sample.ignore()
     #sample.limit()
     #sample.rate()
+
+    sample.union_score()
 
 
     return 0
