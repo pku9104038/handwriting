@@ -1,8 +1,15 @@
 ---
-# configuration YAML for 2018 handwriting test
+# 写字等级考试数据处理项目
+# 数据程序公共定义文件
 
+# 数据程序公共定义
+# 复制自数据程序公共定义文件
 definition:
   columns:
+    level: &level
+      "等级"
+    writing: &writing
+      "书写"
     city: &city
       "区"
     grade: &grade
@@ -17,288 +24,626 @@ definition:
       "学生姓名"
     code: &code
       "学生学籍号"
-    brush_score: &brush_score
+
+    score: &score
+      "成绩"
+    score_brush: &score_brush
       "毛笔成绩"
-    pen_score: &pen_score
+    score_pen: &score_pen
       "硬笔成绩"
-    brush_final: &brush_final
-      "毛笔最终成绩"
-    pen_final: &pen_final
-      "硬笔最终成绩"
-    brush_rank: &brush_rank
-      "毛笔等第"
-    pen_rank: &pen_rank
-      "硬笔等第"
+    score_city: &score_city
+      "区阅成绩"
+    score_province: &score_province
+      "市阅成绩"
+    score_city_mean: &score_city_mean
+      "区阅成绩平均"
+    score_province_mean: &score_province_mean
+      "市阅成绩平均"
+    score_city_std: &score_city_std
+      "区阅成绩标准差"
+    score_province_std: &score_province_std
+      "市阅成绩标准差"
+    score_equated: &score_equated
+      "等值成绩"
+
+    exception: &exception
+      "缺考作弊"
     note: &note
       "备注"
 
-    equating: &equating
-      "等值"
-    city_brush_score: &city_brush_score
-      "区阅毛笔成绩"
-    city_brush_mean: &city_brush_mean
-      "区阅毛笔成绩平均"
-    city_brush_sd: &city_brush_sd
-      "区阅毛笔成绩标准差"
-    city_pen_score: &city_pen_score
-      "区阅硬笔成绩"
-    city_pen_mean: &city_pen_mean
-      "区阅硬笔成绩平均"
-    city_pen_sd: &city_pen_sd
-      "区阅硬笔成绩标准差"
-    province_brush_score: &province_brush_score
-      "市阅毛笔成绩"
-    province_brush_mean: &province_brush_mean
-      "市阅毛笔成绩平均"
-    province_brush_sd: &province_brush_sd
-      "市阅毛笔成绩标准差"
-    province_pen_score: &province_pen_score
-      "市阅硬笔成绩"
-    province_pen_mean: &province_pen_mean
-      "市阅硬笔成绩平均"
-    province_pen_sd: &province_pen_sd
-      "市阅硬笔成绩标准差"
+    gpa: &gpa
+      "等第"
+    gpa_brush: &gpa_brush
+      "毛笔等第"
+    gpa_pen: &gpa_pen
+      "硬笔等第"
 
-configuration:
+  value:
+    level:
+      level1: &level1
+        "一级"
+      level2: &level2
+        "二级"
+    grade:
+      grade5: &grade5
+        "五年级"
+      grade9: &grade9
+        "九年级"
+    writing:
+      pen: "硬笔"
+      brush: "毛笔"
 
-  # conf for sampling from registration data
-  sample:
-    score:
-      dir: "score/"
-      file: "score_union.csv"
+  point:
+    min: &point_min
+      0
+    pen:
+      max: &point_pen_max
+        60
+      perfect: &point_pen_perfect
+        48
+      passed: &point_pen_passed
+        36
+    brush:
+      max: &point_brush_max
+        40
+      pefect: &point_brush_perfect
+        32
+      passed: &point_brush_passed
+        24
+    gpa:
+      perfect: &gpa_perfect
+        "优秀"
+      passed: &gpa_passed
+        "合格"
+      failed: &gpa_failed
+        "不合格"
 
-    score_union:
-      - "嘉定5.csv"
-      - "嘉定9.csv"
-      - "奉贤5.csv"
-      - "奉贤9.csv"
-      - "宝山5.csv"
-      - "宝山9.csv"
-      - "崇明5.csv"
-      - "崇明9.csv"
-      - "徐汇5.csv"
-      - "徐汇9.csv"
-      - "普陀5.csv"
-      - "普陀9.csv"
-      - "杨浦5.csv"
-      - "杨浦9.csv"
-      - "松江5.csv"
-      - "松江9.csv"
-      - "浦东5.csv"
-      - "浦东9.csv"
-      - "虹口5.csv"
-      - "虹口9.csv"
-      - "金山5.csv"
-      - "金山9.csv"
-      - "长宁5.csv"
-      - "长宁9.csv"
-      - "闵行5.csv"
-      - "闵行9.csv"
-      - "青浦5.csv"
-      - "青浦9.csv"
-      - "静安5.csv"
-      - "静安9.csv"
-      - "黄浦5.csv"
-      - "黄浦9.csv"
-
-    score_columns:
-      school: *school
-      room: *room
-      seat: *seat
-      name: *name
-      code: *code
-
-    score_dtype:
-      -
-        name: *school
-        type: "string"
-      -
-        name: *room
-        type: "string"
-      -
-        name: *seat
-        type: "string"
-      -
-        name: *name
-        type: "string"
-      -
-        name: *code
-        type: "string"
-
-
-    union:
-      - "嘉定5.csv"
-      - "嘉定9.csv"
-      - "奉贤5.csv"
-      - "奉贤9.csv"
-      - "宝山5.csv"
-      - "宝山9.csv"
-      - "崇明5.csv"
-      - "崇明9.csv"
-      - "徐汇5.csv"
-      - "徐汇9.csv"
-      - "普陀5.csv"
-      - "普陀9.csv"
-      - "杨浦5.csv"
-      - "杨浦9.csv"
-      - "松江5.csv"
-      - "松江9.csv"
-      - "浦东5.csv"
-      - "浦东9.csv"
-      - "虹口5.csv"
-      - "虹口9.csv"
-      - "金山5.csv"
-      - "金山9.csv"
-      - "长宁5.csv"
-      - "长宁9.csv"
-      - "闵行5.csv"
-      - "闵行9.csv"
-      - "青浦5.csv"
-      - "青浦9.csv"
-      - "静安5.csv"
-      - "静安9.csv"
-      - "黄浦5.csv"
-      - "黄浦9.csv"
-      - "大屯9.csv"
-      - "张家洼9.csv"
-      - "梅山5.csv"
-      - "梅山9.csv"
-
-
-    union_columns:
-      school: *school
-      room: *room
-      seat: *seat
-      name: *name
-      code: *code
-
-    union_dtype:
-      -
-        name: *school
-        type: "string"
-      -
-        name: *room
-        type: "string"
-      -
-        name: *seat
-        type: "string"
-      -
-        name: *name
-        type: "string"
-      -
-        name: *code
-        type: "string"
-
+process:
+  union: # 将各区上报xlsx文件数据合并成一个csv
     input:
-      dir: "sample"
-      file: "registration_union.csv"
+      -
+        city: "闵行区"
+        level:
+          -
+            level: *level1
+            file: "2018闵行区五年级写字考试成绩上报-repaired.xlsx"
+            sheet: "5nj上交"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in:
+                  - "姓名"
+                out: "学生姓名"
 
-    dtype:
+
+          -
+            level: *level2
+            file: "2018闵行区九年级写字考试成绩上报-repaired.xlsx"
+            sheet: "2018闵行区九年级写字考试成绩上报"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+      -
+        city: "崇明区"
+        level:
+          -
+            level: *level1
+            file: "2018年崇明区写字等级考试成绩上报表-repaired.xlsx"
+            sheet: "五年级成绩表"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "毛笔书写成绩"
+                out: "毛笔成绩"
+              -
+                in: "硬笔书写成绩"
+                out: "硬笔成绩"
+          -
+            level: *level2
+            file: "2018年崇明区写字等级考试成绩上报表-repaired.xlsx"
+            sheet: "九年级成绩表"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+
+            columns: # 重命名列
+              -
+                in: "毛笔书写成绩"
+                out: "毛笔成绩"
+              -
+                in: "硬笔书写成绩"
+                out: "硬笔成绩"
+      -
+        city: "普陀区"
+        level:
+          -
+            level: *level1
+            file: "一级成绩.xlsx"
+            sheet: "成绩"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+          -
+            level: *level2
+            file: "二级成绩.xlsx"
+            sheet: "成绩"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+      -
+        city: "奉贤区"
+        level:
+          -
+            level: *level1
+            file: "五年级学生考分登记表（奉贤）-repaired.xlsx"
+            sheet: "Sheet1"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+          -
+            level: *level2
+            file: "九年级学生考分登记表（奉贤）-repaired.xlsx"
+            sheet: "Sheet1"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+      -
+        city: "杨浦区"
+        level:
+          -
+            level: *level1
+            file: "五年级考分登记表（杨浦区）.xlsx"
+            sheet: "五年级报名表"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+          -
+            level: *level2
+            file: "九年级考分登记表（杨浦区）.xlsx"
+            sheet: "九年级"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "硬笔成绩1"
+                out: "硬笔成绩"
+              -
+                in: "毛笔成绩1"
+                out: "毛笔成绩"
+      -
+        city: "嘉定区"
+        level:
+          -
+            level: *level1
+            file: "嘉定区2018写字等级考五年级分数上报-repaired.xlsx"
+            sheet: "小学一级登分"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+          -
+            level: *level2
+            file: "嘉定区2018写字等级考九年级分数上报-repaired.xlsx"
+            sheet: "中学二级登分"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+      -
+        city: "宝山区"
+        level:
+          -
+            level: *level1
+            file: "宝山区-成绩上报表-更正.xlsx"
+            sheet: "五年级成绩表"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "毛笔书写成绩"
+                out: "毛笔成绩"
+              -
+                in: "硬笔书写成绩"
+                out: "硬笔成绩"
+
+          -
+            level: *level2
+            file: "宝山区-成绩上报表-更正.xlsx"
+            sheet: "九年级成绩表"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "毛笔书写成绩"
+                out: "毛笔成绩"
+              -
+                in: "硬笔书写成绩"
+                out: "硬笔成绩"
+      -
+        city: "徐汇区"
+        level:
+          -
+            level: *level1
+            file: "徐汇区五年级成绩上报表-repaired.xlsx"
+            sheet: "五年级成绩表"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+          -
+            level: *level2
+            file: "徐汇区九年级成绩上报表.xlsx"
+            sheet: "九年级成绩表"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+      -
+        city: "松江区"
+        level:
+          -
+            level: *level1
+            file: "松江区-写字考试成绩-更正.xlsx"
+            sheet: "五年级成绩表"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "毛笔书写成绩"
+                out: "毛笔成绩"
+              -
+                in: "硬笔书写成绩"
+                out: "硬笔成绩"
+
+          -
+            level: *level2
+            file: "松江区-写字考试成绩-更正.xlsx"
+            sheet: "九年级成绩表"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "毛笔书写成绩"
+                out: "毛笔成绩"
+              -
+                in: "硬笔书写成绩"
+                out: "硬笔成绩"
+      -
+        city: "浦东新区"
+        level:
+          -
+            level: *level1
+            file: "浦东新区写字等级考五年级成绩汇总表（一级）-repaired-trimp.xlsx"
+            sheet: "浦东新区写字等级考五年级成绩汇总表（一级）"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "毛笔书写成绩"
+                out: "毛笔成绩"
+              -
+                in: "硬笔书写成绩"
+                out: "硬笔成绩"
+
+          -
+            level: *level2
+            file: "浦东新区写字等级考九年级成绩汇总表（二级） 1218.xlsx"
+            sheet: "浦东新区写字等级考九年级成绩表"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "毛笔书写成绩"
+                out: "毛笔成绩"
+              -
+                in: "硬笔书写成绩"
+                out: "硬笔成绩"
+      -
+        city: "虹口区"
+        level:
+          -
+            level: *level1
+            file: "虹口区五年级学生写字等级考学生考分登记表-repaired.xlsx"
+            sheet: "Sheet0"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in:
+                  - "姓名"
+                out: "学生姓名"
+
+
+          -
+            level: *level2
+            file: "虹口区九年级学生写字等级考学生考分登记表-repaired.xlsx"
+            sheet: "Sheet1"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+      -
+        city: "金山区"
+        level:
+          -
+            level: *level1
+            file: "金山区-成绩上报表-repaired.xlsx"
+            sheet: "五年级成绩表"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "毛笔书写成绩"
+                out: "毛笔成绩"
+              -
+                in: "硬笔书写成绩"
+                out: "硬笔成绩"
+
+          -
+            level: *level2
+            file: "金山区-成绩上报表-repaired.xlsx"
+            sheet: "九年级成绩表"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "毛笔书写成绩"
+                out: "毛笔成绩"
+              -
+                in: "硬笔书写成绩"
+                out: "硬笔成绩"
+      -
+        city: "长宁区"
+        level:
+          -
+            level: *level1
+            file: "长宁区-成绩上报表.xlsx"
+            sheet: "五年级成绩表"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "毛笔书写成绩"
+                out: "毛笔成绩"
+              -
+                in: "硬笔书写成绩"
+                out: "硬笔成绩"
+
+          -
+            level: *level2
+            file: "长宁区-成绩上报表.xlsx"
+            sheet: "九年级成绩表"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "毛笔书写成绩"
+                out: "毛笔成绩"
+              -
+                in: "硬笔书写成绩"
+                out: "硬笔成绩"
+      -
+        city: "静安区"
+        level:
+          -
+            level: *level1
+            file: "静安区2018写字等级考试成绩上报表-更正.xlsx"
+            sheet: "五年级成绩表"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "毛笔书写成绩"
+                out: "毛笔成绩"
+              -
+                in: "硬笔书写成绩"
+                out: "硬笔成绩"
+
+          -
+            level: *level2
+            file: "静安区2018写字等级考试成绩上报表-更正.xlsx"
+            sheet: "九年级成绩表"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "毛笔书写成绩"
+                out: "毛笔成绩"
+              -
+                in: "硬笔书写成绩"
+                out: "硬笔成绩"
+      -
+        city: "黄浦区"
+        level:
+          -
+            level: *level1
+            file: "黄浦区写字考成绩（一级）.xlsx"
+            sheet: "Sheet1"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+          -
+            level: *level2
+            file: "黄浦区写字考成绩（二级）.xlsx"
+            sheet: "九年级报名表"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "毛笔书写成绩"
+                out: "毛笔成绩"
+              -
+                in: "硬笔书写成绩"
+                out: "硬笔成绩"
+      -
+        city: "青浦区"
+        level:
+          -
+            level: *level1
+            file: "青浦区2018写字考成绩上报表（五年级）_处理后-repaired.xlsx"
+            sheet: "五年级成绩表"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "毛笔书写成绩"
+                out: "毛笔成绩"
+              -
+                in: "硬笔书写成绩"
+                out: "硬笔成绩"
+
+          -
+            level: *level2
+            file: "青浦区2018写字考成绩上报表（九年级）_处理后-repaired.xlsx"
+            sheet: "九年级成绩表"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "毛笔书写成绩"
+                out: "毛笔成绩"
+              -
+                in: "硬笔书写成绩"
+                out: "硬笔成绩"
+    columns:
+      -
+        name: *level
+        type: "string"
       -
         name: *city
         type: "string"
       -
-        name: *grade
-        type: "string"
-      -
         name: *school
         type: "string"
       -
-        name: *room
-        type: "int"
-      -
-        name: *seat
+        name: *code
         type: "string"
       -
         name: *name
         type: "string"
       -
-        name: *code
+        name: *score_pen
+        type: "number"
+        filter: # 在成绩栏填写文字需要滤除，运行后通过tableau检查csv输出是否有遗留文字
+          - "缺考"
+          - "转出"
+      -
+        name: *score_brush
+        type: "number"
+        filter: # 在成绩栏填写文字需要滤除，运行后通过tableau检查csv输出是否有遗留文字
+          - "缺考"
+          - "转出"
+
+      -
+        name: *note
         type: "string"
 
-    drop:
-      - *seat
-
-    ignore:
-      -
-        key: *city
-        values:
-          - "嘉定"
-          - "张家洼"
-          - "大屯"
-          - "梅山"
-      -
-        key: *school
-        values:
-
-          - "幸福四平实验小学"
-          - "上海市继光初级中学"
-          - "上海市宝山区江湾中心校"
-          - "上海市普陀区真如文英中心小学"
-          - "上海市广中学校"
-          - "上海市泸定中学"
-          # 姓名字段 错误
-          - "上海市虹口区第三中心小学"
-          - "虹口区第二中心小学"
-          - "长青学校"
-          - "上海市虹口区第四中心小学"
-
-
-    criterion:
-      limit:
-        group: *grade
-        scope: *school
-        min: 20
-      rate:
-        group: *grade
-        scope: *city
-        percent: 5
-        grain: *school
-        grainsize: 25
-      filter:
-        key: *room
-        value: 1
-
     output:
-      dir: "sample/"
-      file: "2018年上海市写字等级考试抽样阅卷名单.xlsx"
+      file: "上报成绩数据合并"
+      sheet: "成绩表"
 
-  equating:
-
-    random:
-      registration: "registration_union.csv"
-    input:
-      dir: "equating/"
-      city_score: "city_score.csv"
-      pre_sample: "pre_sample.csv"
-      sample_score: "sample_score.csv"
-      reviewed_score: "reviewed_score.csv"
-
-    statistics:
-      group: *city
-      stat:
-        -
-          score: *city_brush_score
-          mean: *city_brush_mean
-          sd: *city_brush_sd
-        -
-          score: *city_pen_score
-          mean: *city_pen_mean
-          sd: *city_pen_sd
-        -
-          score: *province_brush_score
-          mean: *province_brush_mean
-          sd: *province_brush_sd
-        -
-          score: *province_pen_score
-          mean: *province_pen_mean
-          sd: *province_pen_sd
-
-    output:
-      dir: "equating/"
-      sample_score: "sample_score.csv"
-      reviewed_score: "reviewed_score.csv"
-      score_statistics: "score_statistics.csv"
-
+    copy:
+      dir: "../data.in/"
+      subdir: "equating/"
+      file: "上报成绩数据合并"
+      sheet: "成绩表"
 
 ...

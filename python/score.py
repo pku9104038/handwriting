@@ -3,20 +3,20 @@
 """
 项目：写字等级考试数据处理
 
-模块：报名数据合并
+模块：区阅卷成绩数据合并
 
 输入：
   -
-    文件：各区报名数据
+    文件：各区阅卷成绩数据
     格式：excel
     编码：utf-8/gbk
-    字段：学校名称，考场代码，座位号，学生姓名，学生学籍号
+    字段：学校名称，考场代码，座位号，学生姓名，学生学籍号，硬笔书写成绩，毛笔书写成绩，是否缺考作弊，备注
 输出：
   -
     文件：合并报名数据
     格式：csv
     编码：utf-8
-    字段：等级，区，学校名称，考场代码，座位号，学生姓名，学生学籍号
+    字段：等级，书写，区，学校名称，考场代码，座位号，学生姓名，学生学籍号，硬笔区阅成绩，毛笔区阅成绩，缺考作弊，备注
 
 """
 import yaml
@@ -26,7 +26,6 @@ from shutil import copyfile
 
 
 class Config(object):
-
     """
     配置类
 
@@ -37,7 +36,7 @@ class Config(object):
         编码：utf-8
         配置内容：年度、目录结构、配置文件名
       -
-        文件：报名数据处理配置文件
+        文件：上报成绩数据处理配置文件
         格式：yaml
         编码：utf-8
         配置内容：公共定义、数据处理配置参数
@@ -58,9 +57,9 @@ class Config(object):
         self.yeardir = self.year + "/"
         self.subdir = self.cfg["subdir"]
         self.config_file = self.cfg["file"]
-        self.module = "registration"
+        self.module = "score"
 
-        # 报名数据处理配置初始化
+        # 上报成绩数据处理配置初始化
         conf_yaml = self.dir["yaml"] + self.yeardir \
                     + self.config_file[self.module]
 
@@ -89,11 +88,11 @@ class Config(object):
     @property
     def copy_file(self):
         return self.union["copy"]["dir"] + self.yeardir + \
-               self.union["copy"]["subdir"] +  self.union["copy"]["file"]
+               self.union["copy"]["subdir"] + self.union["copy"]["file"]
 
     @property
     def copy_sheet(self):
-        return  self.union["copy"]["sheet"]
+        return self.union["copy"]["sheet"]
 
     @property
     def col_level(self):
@@ -116,6 +115,8 @@ class Config(object):
                 value = str
             elif i['type'] == "number_whole":
                 value = np.int32
+            elif i['type'] == "number":
+                value = np.float
             else:
                 value = str
             dtype[key] = value
@@ -129,10 +130,11 @@ class Config(object):
         return names
 
 
-class Registration(object):
+class Score(object):
     """
-    报名数据处理类
+    上报成绩数据处理类
     """
+
     def __init__(self, config):
         # 基本项目配置初始化
         self.cfg = config
@@ -151,7 +153,7 @@ class Registration(object):
             print(city)
             for l in levels:
 
-                # 读取xlsx报名表格
+                # 读取xlsx表格
                 level = l["level"]
                 print(level)
                 file = l["file"]
@@ -167,15 +169,20 @@ class Registration(object):
                             value = np.int32
                         dtype[key] = value
 
+
                 xlsx_path = self.cfg.input_dir + file
                 df = pd.DataFrame()
-                df = pd.read_excel(xlsx_path, sheet_name=sheet, skiprows=row-1,
-                                   converters=dtype)
+                df = pd.read_excel(xlsx_path, sheet_name=sheet, skiprows=row-1, converters=dtype)
 
                 # 重命名列名称
                 if not (l["columns"] is None):
                     for col in l["columns"]:
-                        df[col["out"]] = df[col["in"]]
+                        if len(col["in"]) == 2:
+                            df[col["out"]] = df[col["in"][0]].astype(str) + \
+                                             df[col["in"][1]].astype(str)
+                        else:
+                            df[col["out"]] = df[col["in"]]
+
 
                 # 增加 "等级"， "区"
                 df[self.cfg.col_level] = level
@@ -187,17 +194,45 @@ class Registration(object):
                 # 添加到合并数据集
                 df_u = df_u.append(df)
 
+
         # 更正数值类型
         for col in self.cfg.columns:
             col_name = col["name"]
             col_type = col["type"]
+
             if col_type == "string":
                 df_u[col_name] = df_u[col_name].astype(str)
-            elif col_type == "int":
-                df_u[col_name] = df_u[col_name].astype(np.int32)
+                df_u.loc[df_u[col_name] == "nan", col_name] = None
+            elif col_type == "number":
+                df_u[col_name] = pd.to_numeric(df_u[col_name], errors="coerce")
+
+                # df_u[col_name+"str"] = df_u[col_name].astype(str)
+                # 过滤数字列中的文本
+                """
+                if not (col["filter"] is None):
+                    for f in col["filter"]:
+                        df_u.loc[df_u[col_name] == f, col_name] = np.nan
+
+                try:
+                    df_u[col_name] = df_u[col_name].astype(np.float)
+                    print(col_name, df_u[col_name].mean())
+                except ValueError:
+                    print("ValueError, 请检查数字列是否存在未过滤文本")
+                """
+
+                # 异常检查代码，发现异常时开启阅运行
+                print(col_name)
+                # df_u[col_name] = pd.to_numeric(df_u[col_name],errors="coerce")
+
+                #index = df_u.index
+                #for i in index:
+                #    if type(df_u.loc[i,col_name]) == str:
+                #        print(i,df_u.loc[i,])
+                #        df_u.loc[i, col_name] = np.nan
+                        #df_u.loc[i, col_name] = df_u.loc[i, col_name].astype(np.float)
 
 
-        # 输出并复制到下一流程（抽样）的数据输入目录
+        # 输出并复制到下一流程（等值）的数据输入目录
         csv_path = self.cfg.output_file + ".csv"
         print(csv_path)
         df_u.to_csv(csv_path, index=False)
@@ -205,7 +240,7 @@ class Registration(object):
         copy_path = self.cfg.copy_file + ".csv"
         copyfile(csv_path, copy_path)
 
-
+        """
         xlsx_file = self.cfg.output_file + ".xlsx"
         print(xlsx_file)
         writer = pd.ExcelWriter(xlsx_file)
@@ -215,21 +250,40 @@ class Registration(object):
 
         copy_path = self.cfg.copy_file + ".xlsx"
         copyfile(xlsx_file, copy_path)
+        """
+
+    def check(self):
+        """
+        检查上报成绩中存在的异常
+        :return:
+        """
+        path = self.cfg.output_file + ".csv"
+        df = pd.DataFrame()
+        df = pd.read_csv(path,
+                         names=self.cfg.col_names,
+                         skiprows=1, low_memory=False,
+                         dtype=self.cfg.col_dtype)
+
+        #df = pd.read_excel(path, sheet_name=self.cfg.output_sheet,
+        #                   skiprows=0)
+        print(df)
+        print(self.cfg.col_dtype)
+        print(df.dtypes)
+        #df["硬笔成绩"] = df["硬笔成绩"].astype(np.float)
+        print(df["硬笔成绩"].mean())
 
 
 def main():
     conf = Config()
-    print(conf.year)
-    print(conf.dir)
-    print(conf.subdir)
-    print(conf.config_file)
-    print(conf.definition)
-    print(conf.process)
 
-    reg = Registration(conf)
-    reg.union()
+    score = Score(conf)
+    score.union()
+
+    score.check()
+
 
     return 0
+
 
 if __name__ == '__main__':
     main()

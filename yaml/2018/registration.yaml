@@ -109,10 +109,410 @@ process:
             file: "02_五年级考生名单.xls"
             sheet: "5"
             row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学藉号"
+                type: "string"
             columns: # 重命名列
               -
                 in: "学生学藉号"
                 out: *code
+          -
+            level: *level2
+            file: "03_九年级考生名单.xls"
+            sheet: "9"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学藉号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "学生学藉号"
+                out: *code
+      -
+        city: "奉贤区"
+        level:
+          -
+            level: *level1
+            file: "五年级写字考试学生信息汇总表（奉贤）.xls"
+            sheet: "Sheet1"
+            row: 4  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+          -
+            level: *level2
+            file: "九年级写字考试学生信息登记表（奉贤）.xls"
+            sheet: "九年级"
+            row: 3  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+      -
+        city: "嘉定区"
+        level:
+          -
+            level: *level1
+            file: "嘉定区2018写字等级考小学报名汇总.xls"
+            sheet: "五年级"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+          -
+            level: *level2
+            file: "嘉定区2018写字等级考中学报名汇总.xls"
+            sheet: "九年级"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+      -
+        city: "宝山区"
+        level:
+          -
+            level: *level1
+            file: "宝山区-学生信息表-repaired.xlsx"
+            sheet: "五年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+          -
+            level: *level2
+            file: "宝山区-学生信息表-repaired.xlsx"
+            sheet: "九年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+      -
+        city: "崇明区"
+        level:
+          -
+            level: *level1
+            file: "崇明区-写字等级考试学生信息登记表.xlsx"
+            sheet: "五年级成绩表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+          -
+            level: *level2
+            file: "崇明区-写字等级考试学生信息登记表.xlsx"
+            sheet: "九年级成绩表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+      -
+        city: "徐汇区"
+        level:
+          -
+            level: *level1
+            file: "徐汇区五年级学生信息表-repaired.xlsx"
+            sheet: "五年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+          -
+            level: *level2
+            file: "徐汇区九年级学生信息表-repaired.xlsx"
+            sheet: "九年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+      -
+        city: "普陀区"
+        level:
+          -
+            level: *level1
+            file: "普陀区-学生信息表(普陀区).xlsx"
+            sheet: "五年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+          -
+            level: *level2
+            file: "普陀区-学生信息表(普陀区).xlsx"
+            sheet: "九年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+      -
+        city: "杨浦区"
+        level:
+          -
+            level: *level1
+            file: "杨浦区-学生信息表.xlsx"
+            sheet: "五年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+          -
+            level: *level2
+            file: "杨浦区-学生信息表.xlsx"
+            sheet: "九年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+      -
+        city: "松江区"
+        level:
+          -
+            level: *level1
+            file: "松江区-2018年写字等考学生信息表.xlsx"
+            sheet: "五年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+          -
+            level: *level2
+            file: "松江区-2018年写字等考学生信息表.xlsx"
+            sheet: "九年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+
+      -
+        city: "虹口区"
+        level:
+          -
+            level: *level1
+            file: "虹口区五年级学生写字等级考信息登记表2018.xlsx"
+            sheet: "Sheet0"
+            row: 3  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "姓名"
+                out: *name
+
+          -
+            level: *level2
+            file: "虹口区九年级学生写字等级考信息登记表2018.xls"
+            sheet: "Sheet1"
+            row: 3  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+      -
+        city: "金山区"
+        level:
+          -
+            level: *level1
+            file: "金山区-学生信息表-repaired.xlsx"
+            sheet: "五年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+          -
+            level: *level2
+            file: "金山区-学生信息表-repaired.xlsx"
+            sheet: "九年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+      -
+        city: "长宁区"
+        level:
+          -
+            level: *level1
+            file: "长宁区-学生信息表 棋版.xlsx"
+            sheet: "五年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+          -
+            level: *level2
+            file: "长宁区-学生信息表 棋版.xlsx"
+            sheet: "九年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+      -
+        city: "闵行区"
+        level:
+          -
+            level: *level1
+            file: "闵行区-写字考试学生信息表.xlsx"
+            sheet: "五年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+          -
+            level: *level2
+            file: "闵行区-写字考试学生信息表.xlsx"
+            sheet: "九年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+      -
+        city: "青浦区"
+        level:
+          -
+            level: *level1
+            file: "青浦区-2018年义务教育阶段写字等级考试五年级、九年级考生信息-repaired.xlsx"
+            sheet: "五年级"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学藉号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "学生学藉号"
+                out: *code
+
+          -
+            level: *level2
+            file: "青浦区-2018年义务教育阶段写字等级考试五年级、九年级考生信息-repaired.xlsx"
+            sheet: "九年级"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学藉号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "学生学藉号"
+                out: *code
+
+      -
+        city: "静安区"
+        level:
+          -
+            level: *level1
+            file: "静安区-2018年写字等级考学生信息表.xlsx"
+            sheet: "五年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+          -
+            level: *level2
+            file: "静安区-2018年写字等级考学生信息表.xlsx"
+            sheet: "九年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+      -
+        city: "黄浦区"
+        level:
+          -
+            level: *level1
+            file: "黄浦区-2018年写字考学生信息表.xlsx"
+            sheet: "五年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
+
+          -
+            level: *level2
+            file: "黄浦区-2018年写字考学生信息表.xlsx"
+            sheet: "九年级报名表"
+            row: 1  # 起始行（header）
+            converters:
+              -
+                name: "学生学籍号"
+                type: "string"
+            columns: # 重命名列
 
     columns:
       -
