@@ -25,24 +25,39 @@ definition:
 
     score: &score
       "成绩"
-    score_brush: &score_brush
-      "毛笔成绩"
     score_pen: &score_pen
       "硬笔成绩"
-    score_city: &score_city
-      "区阅成绩"
-    score_province: &score_province
-      "市阅成绩"
-    score_city_mean: &score_city_mean
-      "区阅成绩平均"
-    score_province_mean: &score_province_mean
-      "市阅成绩平均"
-    score_city_std: &score_city_std
-      "区阅成绩标准差"
-    score_province_std: &score_province_std
-      "市阅成绩标准差"
-    score_equated: &score_equated
-      "等值成绩"
+    score_city_pen: &score_city_pen
+      "区阅硬笔成绩"
+    score_province_pen: &score_province_pen
+      "市阅硬笔成绩"
+    score_city_pen_mean: &score_city_pen_mean
+      "区阅硬笔成绩平均"
+    score_province_pen_mean: &score_province_pen_mean
+      "市阅硬笔成绩平均"
+    score_city_pen_std: &score_city_pen_std
+      "区阅硬笔成绩标准差"
+    score_province_pen_std: &score_province_pen_std
+      "市阅硬笔成绩标准差"
+    score_pen_equated: &score_pen_equated
+      "等值硬笔成绩"
+    score_brush: &score_brush
+      "毛笔成绩"
+    score_city_brush: &score_city_brush
+      "区阅毛笔成绩"
+    score_province_brush: &score_province_brush
+      "市阅毛笔成绩"
+    score_city_brush_mean: &score_city_brush_mean
+      "区阅毛笔成绩平均"
+    score_province_brush_mean: &score_province_brush_mean
+      "市阅毛笔成绩平均"
+    score_city_brush_std: &score_city_brush_std
+      "区阅毛笔成绩标准差"
+    score_province_brush_std: &score_province_brush_std
+      "市阅毛笔成绩标准差"
+    score_brush_equated: &score_brush_equated
+      "等值毛笔成绩"
+
 
     exception: &exception
       "缺考作弊"
@@ -68,8 +83,10 @@ definition:
       grade9: &grade9
         "九年级"
     writing:
-      pen: "硬笔"
-      brush: "毛笔"
+      pen: &pen
+        "硬笔"
+      brush: &brush
+        "毛笔"
 
   point:
     min: &point_min

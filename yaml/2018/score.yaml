@@ -101,6 +101,7 @@ definition:
 process:
   union: # 将各区上报xlsx文件数据合并成一个csv
     input:
+      # 闵行
       -
         city: "闵行区"
         level:
@@ -118,8 +119,6 @@ process:
                 in:
                   - "姓名"
                 out: "学生姓名"
-
-
           -
             level: *level2
             file: "2018闵行区九年级写字考试成绩上报-repaired.xlsx"
@@ -130,6 +129,7 @@ process:
                 name: "学生学籍号"
                 type: "string"
             columns: # 重命名列
+      # 崇明
       -
         city: "崇明区"
         level:
@@ -166,6 +166,7 @@ process:
               -
                 in: "硬笔书写成绩"
                 out: "硬笔成绩"
+      # 普陀
       -
         city: "普陀区"
         level:
@@ -190,6 +191,7 @@ process:
                 name: "学生学籍号"
                 type: "string"
             columns: # 重命名列
+      # 奉贤
       -
         city: "奉贤区"
         level:
@@ -214,6 +216,7 @@ process:
                 name: "学生学籍号"
                 type: "string"
             columns: # 重命名列
+      # 杨浦
       -
         city: "杨浦区"
         level:
@@ -244,6 +247,7 @@ process:
               -
                 in: "毛笔成绩1"
                 out: "毛笔成绩"
+      # 嘉定
       -
         city: "嘉定区"
         level:
@@ -268,6 +272,7 @@ process:
                 name: "学生学籍号"
                 type: "string"
             columns: # 重命名列
+      # 宝山
       -
         city: "宝山区"
         level:
@@ -304,6 +309,7 @@ process:
               -
                 in: "硬笔书写成绩"
                 out: "硬笔成绩"
+      # 徐汇
       -
         city: "徐汇区"
         level:
@@ -328,6 +334,7 @@ process:
                 name: "学生学籍号"
                 type: "string"
             columns: # 重命名列
+      # 松江
       -
         city: "松江区"
         level:
@@ -364,6 +371,7 @@ process:
               -
                 in: "硬笔书写成绩"
                 out: "硬笔成绩"
+      # 浦东
       -
         city: "浦东新区"
         level:
@@ -400,6 +408,7 @@ process:
               -
                 in: "硬笔书写成绩"
                 out: "硬笔成绩"
+      # 虹口
       -
         city: "虹口区"
         level:
@@ -429,6 +438,7 @@ process:
                 name: "学生学籍号"
                 type: "string"
             columns: # 重命名列
+      # 金山
       -
         city: "金山区"
         level:
@@ -465,6 +475,7 @@ process:
               -
                 in: "硬笔书写成绩"
                 out: "硬笔成绩"
+      # 长宁
       -
         city: "长宁区"
         level:
@@ -480,10 +491,10 @@ process:
             columns: # 重命名列
               -
                 in: "毛笔书写成绩"
-                out: "毛笔成绩"
+                out: "硬笔成绩"
               -
                 in: "硬笔书写成绩"
-                out: "硬笔成绩"
+                out: "毛笔成绩"
 
           -
             level: *level2
@@ -497,10 +508,11 @@ process:
             columns: # 重命名列
               -
                 in: "毛笔书写成绩"
-                out: "毛笔成绩"
+                out: "硬笔成绩"
               -
                 in: "硬笔书写成绩"
-                out: "硬笔成绩"
+                out: "毛笔成绩"
+      # 静安
       -
         city: "静安区"
         level:
@@ -516,10 +528,10 @@ process:
             columns: # 重命名列
               -
                 in: "毛笔书写成绩"
-                out: "毛笔成绩"
+                out: "硬笔成绩"
               -
                 in: "硬笔书写成绩"
-                out: "硬笔成绩"
+                out: "毛笔成绩"
 
           -
             level: *level2
@@ -533,10 +545,11 @@ process:
             columns: # 重命名列
               -
                 in: "毛笔书写成绩"
-                out: "毛笔成绩"
+                out: "硬笔成绩"
               -
                 in: "硬笔书写成绩"
-                out: "硬笔成绩"
+                out: "毛笔成绩"
+      # 黄浦
       -
         city: "黄浦区"
         level:
@@ -567,6 +580,7 @@ process:
               -
                 in: "硬笔书写成绩"
                 out: "硬笔成绩"
+      # 青浦
       -
         city: "青浦区"
         level:
@@ -612,6 +626,9 @@ process:
         type: "string"
       -
         name: *school
+        type: "string"
+      -
+        name: *room
         type: "string"
       -
         name: *code

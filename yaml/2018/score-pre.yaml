@@ -1,0 +1,304 @@
+---
+# configuration YAML for 2018 handwriting test
+
+definition:
+  columns:
+    city: &city
+      "区"
+    grade: &grade
+      "年级"
+    school: &school
+      "学校名称"
+    room: &room
+      "考场代码"
+    seat: &seat
+      "座位号"
+    name: &name
+      "学生姓名"
+    code: &code
+      "学生学籍号"
+    brush_score: &brush_score
+      "毛笔成绩"
+    pen_score: &pen_score
+      "硬笔成绩"
+    brush_final: &brush_final
+      "毛笔最终成绩"
+    pen_final: &pen_final
+      "硬笔最终成绩"
+    brush_rank: &brush_rank
+      "毛笔等第"
+    pen_rank: &pen_rank
+      "硬笔等第"
+    note: &note
+      "备注"
+
+    equating: &equating
+      "等值"
+    city_brush_score: &city_brush_score
+      "区阅毛笔成绩"
+    city_brush_mean: &city_brush_mean
+      "区阅毛笔成绩平均"
+    city_brush_sd: &city_brush_sd
+      "区阅毛笔成绩标准差"
+    city_pen_score: &city_pen_score
+      "区阅硬笔成绩"
+    city_pen_mean: &city_pen_mean
+      "区阅硬笔成绩平均"
+    city_pen_sd: &city_pen_sd
+      "区阅硬笔成绩标准差"
+    province_brush_score: &province_brush_score
+      "市阅毛笔成绩"
+    province_brush_mean: &province_brush_mean
+      "市阅毛笔成绩平均"
+    province_brush_sd: &province_brush_sd
+      "市阅毛笔成绩标准差"
+    province_pen_score: &province_pen_score
+      "市阅硬笔成绩"
+    province_pen_mean: &province_pen_mean
+      "市阅硬笔成绩平均"
+    province_pen_sd: &province_pen_sd
+      "市阅硬笔成绩标准差"
+
+configuration:
+
+  # conf for sampling from registration data
+  sample:
+    score:
+      dir: "score/"
+      file: "score_union.csv"
+
+    score_union:
+      - "嘉定5.csv"
+      - "嘉定9.csv"
+      - "奉贤5.csv"
+      - "奉贤9.csv"
+      - "宝山5.csv"
+      - "宝山9.csv"
+      - "崇明5.csv"
+      - "崇明9.csv"
+      - "徐汇5.csv"
+      - "徐汇9.csv"
+      - "普陀5.csv"
+      - "普陀9.csv"
+      - "杨浦5.csv"
+      - "杨浦9.csv"
+      - "松江5.csv"
+      - "松江9.csv"
+      - "浦东5.csv"
+      - "浦东9.csv"
+      - "虹口5.csv"
+      - "虹口9.csv"
+      - "金山5.csv"
+      - "金山9.csv"
+      - "长宁5.csv"
+      - "长宁9.csv"
+      - "闵行5.csv"
+      - "闵行9.csv"
+      - "青浦5.csv"
+      - "青浦9.csv"
+      - "静安5.csv"
+      - "静安9.csv"
+      - "黄浦5.csv"
+      - "黄浦9.csv"
+
+    score_columns:
+      school: *school
+      room: *room
+      seat: *seat
+      name: *name
+      code: *code
+
+    score_dtype:
+      -
+        name: *school
+        type: "string"
+      -
+        name: *room
+        type: "string"
+      -
+        name: *seat
+        type: "string"
+      -
+        name: *name
+        type: "string"
+      -
+        name: *code
+        type: "string"
+
+
+    union:
+      - "嘉定5.csv"
+      - "嘉定9.csv"
+      - "奉贤5.csv"
+      - "奉贤9.csv"
+      - "宝山5.csv"
+      - "宝山9.csv"
+      - "崇明5.csv"
+      - "崇明9.csv"
+      - "徐汇5.csv"
+      - "徐汇9.csv"
+      - "普陀5.csv"
+      - "普陀9.csv"
+      - "杨浦5.csv"
+      - "杨浦9.csv"
+      - "松江5.csv"
+      - "松江9.csv"
+      - "浦东5.csv"
+      - "浦东9.csv"
+      - "虹口5.csv"
+      - "虹口9.csv"
+      - "金山5.csv"
+      - "金山9.csv"
+      - "长宁5.csv"
+      - "长宁9.csv"
+      - "闵行5.csv"
+      - "闵行9.csv"
+      - "青浦5.csv"
+      - "青浦9.csv"
+      - "静安5.csv"
+      - "静安9.csv"
+      - "黄浦5.csv"
+      - "黄浦9.csv"
+      - "大屯9.csv"
+      - "张家洼9.csv"
+      - "梅山5.csv"
+      - "梅山9.csv"
+
+
+    union_columns:
+      school: *school
+      room: *room
+      seat: *seat
+      name: *name
+      code: *code
+
+    union_dtype:
+      -
+        name: *school
+        type: "string"
+      -
+        name: *room
+        type: "string"
+      -
+        name: *seat
+        type: "string"
+      -
+        name: *name
+        type: "string"
+      -
+        name: *code
+        type: "string"
+
+    input:
+      dir: "sample"
+      file: "registration_union.csv"
+
+    dtype:
+      -
+        name: *city
+        type: "string"
+      -
+        name: *grade
+        type: "string"
+      -
+        name: *school
+        type: "string"
+      -
+        name: *room
+        type: "int"
+      -
+        name: *seat
+        type: "string"
+      -
+        name: *name
+        type: "string"
+      -
+        name: *code
+        type: "string"
+
+    drop:
+      - *seat
+
+    ignore:
+      -
+        key: *city
+        values:
+          - "嘉定"
+          - "张家洼"
+          - "大屯"
+          - "梅山"
+      -
+        key: *school
+        values:
+
+          - "幸福四平实验小学"
+          - "上海市继光初级中学"
+          - "上海市宝山区江湾中心校"
+          - "上海市普陀区真如文英中心小学"
+          - "上海市广中学校"
+          - "上海市泸定中学"
+          # 姓名字段 错误
+          - "上海市虹口区第三中心小学"
+          - "虹口区第二中心小学"
+          - "长青学校"
+          - "上海市虹口区第四中心小学"
+
+
+    criterion:
+      limit:
+        group: *grade
+        scope: *school
+        min: 20
+      rate:
+        group: *grade
+        scope: *city
+        percent: 5
+        grain: *school
+        grainsize: 25
+      filter:
+        key: *room
+        value: 1
+
+    output:
+      dir: "sample/"
+      file: "2018年上海市写字等级考试抽样阅卷名单.xlsx"
+
+  equating:
+
+    random:
+      registration: "registration_union.csv"
+    input:
+      dir: "equating/"
+      city_score: "city_score.csv"
+      pre_sample: "pre_sample.csv"
+      sample_score: "sample_score.csv"
+      reviewed_score: "reviewed_score.csv"
+
+    statistics:
+      group: *city
+      stat:
+        -
+          score: *city_brush_score
+          mean: *city_brush_mean
+          sd: *city_brush_sd
+        -
+          score: *city_pen_score
+          mean: *city_pen_mean
+          sd: *city_pen_sd
+        -
+          score: *province_brush_score
+          mean: *province_brush_mean
+          sd: *province_brush_sd
+        -
+          score: *province_pen_score
+          mean: *province_pen_mean
+          sd: *province_pen_sd
+
+    output:
+      dir: "equating/"
+      sample_score: "sample_score.csv"
+      reviewed_score: "reviewed_score.csv"
+      score_statistics: "score_statistics.csv"
+
+
+...

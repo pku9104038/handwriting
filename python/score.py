@@ -13,7 +13,7 @@
     字段：学校名称，考场代码，座位号，学生姓名，学生学籍号，硬笔书写成绩，毛笔书写成绩，是否缺考作弊，备注
 输出：
   -
-    文件：合并报名数据
+    文件：合并成绩数据
     格式：csv
     编码：utf-8
     字段：等级，书写，区，学校名称，考场代码，座位号，学生姓名，学生学籍号，硬笔区阅成绩，毛笔区阅成绩，缺考作弊，备注
@@ -206,32 +206,7 @@ class Score(object):
             elif col_type == "number":
                 df_u[col_name] = pd.to_numeric(df_u[col_name], errors="coerce")
 
-                # df_u[col_name+"str"] = df_u[col_name].astype(str)
-                # 过滤数字列中的文本
-                """
-                if not (col["filter"] is None):
-                    for f in col["filter"]:
-                        df_u.loc[df_u[col_name] == f, col_name] = np.nan
-
-                try:
-                    df_u[col_name] = df_u[col_name].astype(np.float)
-                    print(col_name, df_u[col_name].mean())
-                except ValueError:
-                    print("ValueError, 请检查数字列是否存在未过滤文本")
-                """
-
-                # 异常检查代码，发现异常时开启阅运行
-                print(col_name)
-                # df_u[col_name] = pd.to_numeric(df_u[col_name],errors="coerce")
-
-                #index = df_u.index
-                #for i in index:
-                #    if type(df_u.loc[i,col_name]) == str:
-                #        print(i,df_u.loc[i,])
-                #        df_u.loc[i, col_name] = np.nan
-                        #df_u.loc[i, col_name] = df_u.loc[i, col_name].astype(np.float)
-
-
+        print(df_u.dtypes)
         # 输出并复制到下一流程（等值）的数据输入目录
         csv_path = self.cfg.output_file + ".csv"
         print(csv_path)
@@ -240,19 +215,9 @@ class Score(object):
         copy_path = self.cfg.copy_file + ".csv"
         copyfile(csv_path, copy_path)
 
-        """
-        xlsx_file = self.cfg.output_file + ".xlsx"
-        print(xlsx_file)
-        writer = pd.ExcelWriter(xlsx_file)
-        df_u.to_excel(writer, self.cfg.output_sheet)
-        writer.save()
-        writer.close()
 
-        copy_path = self.cfg.copy_file + ".xlsx"
-        copyfile(xlsx_file, copy_path)
-        """
 
-    def check(self):
+    def check_city(self):
         """
         检查上报成绩中存在的异常
         :return:
@@ -264,22 +229,136 @@ class Score(object):
                          skiprows=1, low_memory=False,
                          dtype=self.cfg.col_dtype)
 
-        #df = pd.read_excel(path, sheet_name=self.cfg.output_sheet,
-        #                   skiprows=0)
-        print(df)
-        print(self.cfg.col_dtype)
-        print(df.dtypes)
-        #df["硬笔成绩"] = df["硬笔成绩"].astype(np.float)
-        print(df["硬笔成绩"].mean())
+        # 区成绩校验
+        df_agg = df.groupby(by=["等级","区"]).agg('mean')
+        df_agg["check"] = df_agg["硬笔成绩"] < df_agg["毛笔成绩"]
+        df_agg = df_agg[df_agg["check"]==True]
+        print(df_agg)
+        csv_path = self.cfg.output_file + "_区检查.csv"
+        print(csv_path)
+        df_agg.to_csv(csv_path, index=True)
+
+    def check_school(self):
+        """
+        检查上报成绩中存在的异常
+        :return:
+        """
+        path = self.cfg.output_file + ".csv"
+        df = pd.DataFrame()
+        df = pd.read_csv(path,
+                         names=self.cfg.col_names,
+                         skiprows=1, low_memory=False,
+                         dtype=self.cfg.col_dtype)
+
+        # 学校成绩校验
+        df_agg = df.groupby(by=["等级","区","学校名称"]).agg('mean')
+        df_agg["check"] = df_agg["硬笔成绩"] < df_agg["毛笔成绩"]
+        df_agg = df_agg[df_agg["check"]==True]
+        print(df_agg)
+        csv_path = self.cfg.output_file + "_校检查.csv"
+        print(csv_path)
+        df_agg.to_csv(csv_path, index=True)
+
+    def check_room(self):
+        """
+        检查上报成绩中存在的异常
+        :return:
+        """
+        path = self.cfg.output_file + ".csv"
+        df = pd.DataFrame()
+        df = pd.read_csv(path,
+                         names=self.cfg.col_names,
+                         skiprows=1, low_memory=False,
+                         dtype=self.cfg.col_dtype)
+
+        # 考场成绩校验
+        df_agg = df.groupby(by=["等级","区","学校名称","考场代码"]).agg('mean')
+        df_agg["check"] = df_agg["硬笔成绩"] < df_agg["毛笔成绩"]
+        df_agg = df_agg[df_agg["check"]==True]
+        print(df_agg)
+        csv_path = self.cfg.output_file + "_考场检查.csv"
+        print(csv_path)
+        df_agg.to_csv(csv_path, index=True)
+
+    def check_student(self):
+        """
+        检查上报成绩中存在的异常
+        :return:
+        """
+        path = self.cfg.output_file + ".csv"
+        df = pd.DataFrame()
+        df = pd.read_csv(path,
+                         names=self.cfg.col_names,
+                         skiprows=1, low_memory=False,
+                         dtype=self.cfg.col_dtype)
+
+        # 学生成绩校验
+        df_agg = df.groupby(by=["等级","区","学校名称","学生学籍号"]).agg('mean')
+        df_agg["check1"] = df_agg["硬笔成绩"] < df_agg["毛笔成绩"] - 10
+        df_agg["check2"] = df_agg["硬笔成绩"] > 0
+        df_agg = df_agg[df_agg["check1"]]
+        df_agg = df_agg[df_agg["check2"]]
+        #df_agg = df_agg[df_agg["check"]==True]
+        print(df_agg)
+
+        path = self.cfg.output_file + "_考生检查.xlsx"
+        print(path)
+        writer = pd.ExcelWriter(path)
+        df_agg.to_excel(writer)
+        writer.save()
+
+
+    def check_error(self):
+        """
+        检查上报成绩中存在的异常
+        :return:
+        """
+        path = self.cfg.output_file + ".csv"
+        df = pd.DataFrame()
+        df = pd.read_csv(path,
+                         names=self.cfg.col_names,
+                         skiprows=1, low_memory=False,
+                         dtype=self.cfg.col_dtype)
+
+        # 学生成绩校验
+        df_err = pd.DataFrame()
+        df_e1 = df[df["硬笔成绩"] > 60]
+        print(df_e1)
+        df_e2 = df[df["硬笔成绩"]<0]
+        print(df_e2)
+        df_e3 = df[df["毛笔成绩"] > 40]
+        print(df_e3)
+        df_e4 = df[df["毛笔成绩"] < 0]
+        print(df_e4)
+        df_err = df_err.append(df_e1)
+        df_err = df_err.append(df_e2)
+        df_err = df_err.append(df_e3)
+        df_err = df_err.append(df_e4)
+        print(df_err)
+
+        csv_path = self.cfg.output_file + "_成绩错误.csv"
+        print(csv_path)
+        df_err.to_csv(csv_path, index=True)
 
 
 def main():
     conf = Config()
-
     score = Score(conf)
+
     score.union()
 
-    score.check()
+    """
+    score.check_city()
+
+    score.check_school()
+
+    score.check_room()
+
+    score.check_student()
+
+    score.check_error()
+    """
+
 
 
     return 0
