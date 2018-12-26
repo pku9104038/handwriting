@@ -183,17 +183,30 @@ class Score(object):
                         else:
                             df[col["out"]] = df[col["in"]]
 
+                # 保留有效列
+                # df = df[self.cfg.col_names]
 
                 # 增加 "等级"， "区"
                 df[self.cfg.col_level] = level
                 df[self.cfg.col_city] = city
 
-                # 保留有效列
-                df = df[self.cfg.col_names]
 
                 # 添加到合并数据集
                 df_u = df_u.append(df)
+                print(df_u.columns)
 
+
+        # 输出问题校验数据文件
+        for col in self.cfg.columns:
+            col_name = col["name"]
+            df_u[col_name] = df_u[col_name].astype(str)
+        print(df_u.columns)
+        csv_path = self.cfg.output_file + "问题校验.csv"
+        print(csv_path)
+        df_u.to_csv(csv_path, index=False)
+
+        # 保留有效列
+        df_u = df_u[self.cfg.col_names]
 
         # 更正数值类型
         for col in self.cfg.columns:

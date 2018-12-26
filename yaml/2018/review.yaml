@@ -54,9 +54,9 @@ definition:
     score_province_brush_mean: &score_province_brush_mean
       "市阅毛笔成绩_mean"
     score_city_brush_std: &score_city_brush_std
-      "区阅毛笔成绩标_std"
+      "区阅毛笔成绩_std"
     score_province_brush_std: &score_province_brush_std
-      "市阅毛笔成绩标_std"
+      "市阅毛笔成绩_std"
     score_brush_equated: &score_brush_equated
       "等值毛笔成绩"
 

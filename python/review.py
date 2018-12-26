@@ -262,6 +262,7 @@ class Review(object):
         csv_path = self.cfg.output_file_stat + ".csv"
         #df_agg.columns = df_agg.columns.get_level_values(0)
         df_agg.columns = ['_'.join(col).strip() for col in df_agg.columns.values]
+        print(df_agg.columns)
         df_agg.to_csv(csv_path, index=True)
 
         copy_path = self.cfg.copy_file_stat + ".csv"
