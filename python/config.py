@@ -2,7 +2,7 @@
 
 
 """
-项目：写字等级考试数据处理
+项目：写字等级考试成绩等值数据处理
 
 模块：项目配置
 """
@@ -31,14 +31,25 @@ class Configuration(object):
       配置数据实例
     """
 
+
     def __init__(self):
         #if not conf_yaml:
-        conf_yaml = "../yaml/conf.yaml"
-        yaml_obj = yaml.load(open(conf_yaml)).get("conf")
-        self.dir = yaml_obj["dir"]
-        configuration_yaml = yaml_obj["file"]["configuration"]
-        yaml_path = self.dir["yaml"]+configuration_yaml
-        self.conf = yaml.load(open(yaml_path)).get("configuration")
+
+        # consts
+        CONF_YAML_FILE = "../yaml/conf.yaml"
+        CONF_ROOT = "conf"
+
+        self.CONF_ROOT = yaml.load(open(CONF_YAML_FILE)).get(CONF_ROOT)
+
+        # conf_yaml = "../yaml/conf.yaml"
+        # self.dir = yaml_obj["dir"]
+        # configuration_yaml = yaml_obj["file"]["configuration"]
+        # yaml_path = self.dir["yaml"]+configuration_yaml
+        # self.conf = yaml.load(open(yaml_path)).get("configuration")
+
+    @property
+    def YEAR(self):
+        return self.CONF_ROOT["year"]
 
     @property
     def input_dir(self):
@@ -202,14 +213,19 @@ class Configuration(object):
 
 
 def main():
-    conf = Configuration()
-    print(conf)
-    print(conf.sample_output_school)
-    print(type(conf.sample_columns))
-    print(conf.sample_columns)
 
-    print(type(conf.sample_dtype))
-    print(conf.sample_dtype)
+    conf = Configuration()
+
+    print(conf.YEAR)
+
+    # print(conf.input_dir)
+    # print(conf.score_input_dir)
+    # print(conf.sample_output_school)
+    # print(type(conf.sample_columns))
+    # print(conf.sample_columns)
+
+    # print(type(conf.sample_dtype))
+    # print(conf.sample_dtype)
 
 
     return 0

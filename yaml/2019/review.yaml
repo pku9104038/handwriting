@@ -1,0 +1,271 @@
+---
+# 写字等级考试数据处理项目
+# 数据程序公共定义文件
+
+# 数据程序公共定义
+# 复制自数据程序公共定义文件
+definition:
+  columns:
+    level: &level
+      "等级"
+    writing: &writing
+      "书写"
+    city: &city
+      "区"
+    grade: &grade
+      "年级"
+    school: &school
+      "学校名称"
+    room: &room
+      "考场代码"
+    seat: &seat
+      "座位号"
+    name: &name
+      "学生姓名"
+    code: &code
+      "学生学籍号"
+
+    score: &score
+      "成绩"
+    score_pen: &score_pen
+      "硬笔成绩"
+    score_city_pen: &score_city_pen
+      "区阅硬笔成绩"
+    score_province_pen: &score_province_pen
+      "市阅硬笔成绩"
+    score_city_pen_mean: &score_city_pen_mean
+      "区阅硬笔成绩_mean"
+    score_province_pen_mean: &score_province_pen_mean
+      "市阅硬笔成绩_mean"
+    score_city_pen_std: &score_city_pen_std
+      "区阅硬笔成绩_std"
+    score_province_pen_std: &score_province_pen_std
+      "市阅硬笔成绩_std"
+    score_pen_equated: &score_pen_equated
+      "等值硬笔成绩"
+    score_brush: &score_brush
+      "毛笔成绩"
+    score_city_brush: &score_city_brush
+      "区阅毛笔成绩"
+    score_province_brush: &score_province_brush
+      "市阅毛笔成绩"
+    score_city_brush_mean: &score_city_brush_mean
+      "区阅毛笔成绩_mean"
+    score_province_brush_mean: &score_province_brush_mean
+      "市阅毛笔成绩_mean"
+    score_city_brush_std: &score_city_brush_std
+      "区阅毛笔成绩_std"
+    score_province_brush_std: &score_province_brush_std
+      "市阅毛笔成绩_std"
+    score_brush_equated: &score_brush_equated
+      "等值毛笔成绩"
+
+
+    exception: &exception
+      "缺考作弊"
+    note: &note
+      "备注"
+
+    gpa: &gpa
+      "等第"
+    gpa_brush: &gpa_brush
+      "毛笔等第"
+    gpa_pen: &gpa_pen
+      "硬笔等第"
+
+  value:
+    level:
+      level1: &level1
+        "一级"
+      level2: &level2
+        "二级"
+    grade:
+      grade5: &grade5
+        "五年级"
+      grade9: &grade9
+        "九年级"
+    writing:
+      pen: &pen
+        "硬笔"
+      brush: &brush
+        "毛笔"
+
+  point:
+    min: &point_min
+      0
+    pen:
+      max: &point_pen_max
+        60
+      perfect: &point_pen_perfect
+        48
+      passed: &point_pen_passed
+        36
+    brush:
+      max: &point_brush_max
+        40
+      pefect: &point_brush_perfect
+        32
+      passed: &point_brush_passed
+        24
+    gpa:
+      perfect: &gpa_perfect
+        "优秀"
+      passed: &gpa_passed
+        "合格"
+      failed: &gpa_failed
+        "不合格"
+
+process:
+  union: # 合并市、区阅卷成绩
+    input:
+      # 一级
+      -
+        level: *level1
+        writing:
+          -
+            writing: *pen
+            file: "A写字等级考试网上阅卷数据.xlsx"
+            sheet: "硬笔一级"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "学籍号"
+                out: *code
+              -
+                in: "姓名"
+                out: *name
+              -
+                in: "2评区分数"
+                out: *score_city_pen
+              -
+                in: "成绩"
+                out: *score_province_pen
+          -
+            writing: *brush
+            file: "A写字等级考试网上阅卷数据.xlsx"
+            sheet: "毛笔一级"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学籍号"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "学籍号"
+                out: *code
+              -
+                in: "姓名"
+                out: *name
+              -
+                in: "2评区分数"
+                out: *score_city_brush
+              -
+                in: "成绩"
+                out: *score_province_brush
+      # 一级
+      -
+        level: *level2
+        writing:
+          -
+            writing: *pen
+            file: "A写字等级考试网上阅卷数据.xlsx"
+            sheet: "硬笔二级"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学籍"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "学籍"
+                out: *code
+              -
+                in: "姓名"
+                out: *name
+              -
+                in: "学校"
+                out: *school
+              -
+                in: "2评区分数"
+                out: *score_city_pen
+              -
+                in: "成绩"
+                out: *score_province_pen
+          -
+            writing: *brush
+            file: "A写字等级考试网上阅卷数据.xlsx"
+            sheet: "毛笔二级"
+            row: 1  # 起始行（header）
+            converters: # 指定列数据转换类型
+              -
+                name: "学籍"
+                type: "string"
+            columns: # 重命名列
+              -
+                in: "学籍"
+                out: *code
+              -
+                in: "姓名"
+                out: *name
+              -
+                in: "学校"
+                out: *school
+              -
+                in: "2评区分数"
+                out: *score_city_brush
+              -
+                in: "成绩"
+                out: *score_province_brush
+
+
+    columns:
+      -
+        name: *level
+        type: "string"
+      #-
+      #  name: *writing
+      #  type: "string"
+      -
+        name: *city
+        type: "string"
+      -
+        name: *school
+        type: "string"
+      -
+        name: *code
+        type: "string"
+      -
+        name: *name
+        type: "string"
+      -
+        name: *score_city_pen
+        type: "number"
+
+      -
+        name: *score_province_pen
+        type: "number"
+      -
+        name: *score_city_brush
+        type: "number"
+
+      -
+        name: *score_province_brush
+        type: "number"
+
+    output:
+      file: "阅卷成绩数据合并"
+      stat: "阅卷成绩数据合并统计"
+      sheet: "成绩表"
+
+    copy:
+      dir: "../data.in/"
+      subdir: "equating/"
+      file: "阅卷成绩数据合并"
+      stat: "阅卷成绩数据合并统计"
+      sheet: "成绩表"
+
+...

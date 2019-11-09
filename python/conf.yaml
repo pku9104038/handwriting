@@ -1,27 +1,24 @@
 ---
 
-# 写字等级考试数据处理项目
-# 数据程序公共配置文件
+# 项目：写字等级考试成绩等值数据处理
+# 模块：数据处理公共配置文件
 
-# 年度
-year: &year
-  "2018"
 
-# 目录
+# 目录环境配置
 config:
-  dir:
-    yaml: "../yaml/"
-    input: "../data.in/"
-    output: "../data.out/"
+  dir:                                # 项目工作目录树
+    yaml: "../yaml/"                  # 数据处理配置文件目录
+    input: "../data.in/"              # 数据输入目录
+    output: "../data.out/"            # 数据处理输出目录
 
-  subdir:
-    registration: "registration/"
-    sample: "sample/"
-    score: "score/"
-    review: "review/"
-    equating: "equating/"
+  subdir:                             # 数据子目录树
+    registration: "registration/"     # 考生报名数据目录
+    sample: "sample/"                 # 考生抽样数据目录
+    score: "score/"                   # 考生成绩数据目录
+    review: "review/"                 # 考生复核成绩目录
+    equating: "equating/"             # 考生等值成绩目录
 
-  file:
+  file:                               # 配置文件名称
     definition: "definition.yaml"
     registration: "registration.yaml"
     sample: "sample.yaml"
@@ -29,5 +26,8 @@ config:
     review: "review.yaml"
     equating: "equating.yaml"
 
+# 考试年度配置 = 配置、数据输入/输出子目录名称
+year: &year
+  "2018"
 
 ...
