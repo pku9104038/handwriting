@@ -311,7 +311,9 @@ class Equating(object):
         df = df_c.merge(df_s,how='left', on=["等级","区"])
         print(df.columns)
 
+        """
         idx1 = df[df["区"]=="嘉定区"].index
+
         idx2 = df[df["区"]!="嘉定区"].index
 
         df.loc[idx1, "硬笔等值"] = df.loc[idx1, "硬笔成绩"]
@@ -324,6 +326,21 @@ class Equating(object):
         df.loc[idx2, "毛笔等值"] = df.loc[idx2, "市阅毛笔成绩_mean"] + \
                                (df.loc[idx2, "毛笔成绩"] - df.loc[idx2, "区阅毛笔成绩_mean"]) / \
                                df.loc[idx2, "区阅毛笔成绩_std"] * df.loc[idx2, "市阅毛笔成绩_std"]
+        
+        """
+
+        df1 = df[df["区"] == "嘉定区"]
+        df1.loc[:, "硬笔等值"] = df1.loc[:, "硬笔成绩"]
+        df1.loc[:, "毛笔等值"] = df1.loc[:, "毛笔成绩"]
+
+        df2 = df[df["区"] != "嘉定区"]
+        df2.loc[:, "硬笔等值"] = df2.loc[:, "市阅硬笔成绩_mean"] + \
+                               (df2.loc[:, "硬笔成绩"] - df2.loc[:, "区阅硬笔成绩_mean"]) / \
+                               df2.loc[:, "区阅硬笔成绩_std"] * df2.loc[:, "市阅硬笔成绩_std"]
+        df2.loc[:, "毛笔等值"] = df2.loc[:, "市阅毛笔成绩_mean"] + \
+                               (df2.loc[:, "毛笔成绩"] - df2.loc[:, "区阅毛笔成绩_mean"]) / \
+                               df2.loc[:, "区阅毛笔成绩_std"] * df2.loc[:, "市阅毛笔成绩_std"]
+        df = df1.append(df2)
 
         idx = df[df["硬笔成绩"].isnull()].index
         df.loc[idx, "硬笔等值"] = None
